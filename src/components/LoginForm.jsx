@@ -1,155 +1,126 @@
-import React, { useState, useEffect } from 'react'
-import './LoginForm.css' // 스타일링을 위한 CSS 파일
-import { FaGithub, FaGoogle } from 'react-icons/fa'
-import { useNavigate } from 'react-router-dom'
-import ChattaPenguin from '../assets/ChattaPenguin.png'
+import React, { useState, useEffect } from 'react';
+import './LoginForm.css';
+import { FaGithub, FaGoogle } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import ChattaPenguin from '../assets/ChattaPenguin.png';
 
 function LoginForm() {
-  const [user, setUser] = useState(null)
-  const navigate = useNavigate()
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+
+  // ✅ 환경변수에서 redirect_uri 가져오기
+  const googleRedirectUri = import.meta.env.VITE_GOOGLE_REDIRECT_URI;
+  const githubRedirectUri = import.meta.env.VITE_GITHUB_REDIRECT_URI;
 
   useEffect(() => {
-    console.log('LoginForm useEffect 실행')
-    const storedUser = localStorage.getItem('user')
-    console.log('저장된 사용자 정보:', storedUser)
-
+    const storedUser = localStorage.getItem('user');
     if (storedUser) {
-      const userData = JSON.parse(storedUser)
-      console.log('저장된 사용자 정보가 있음:', userData)
-      setUser(userData)
-      navigate('/chat', { replace: true })
-      return
+      const userData = JSON.parse(storedUser);
+      setUser(userData);
+      navigate('/chat', { replace: true });
+      return;
     }
 
-    const urlParams = new URLSearchParams(window.location.search)
-    const code = urlParams.get('code')
-    const scope = urlParams.get('scope') // Google에만 존재
-    const state = urlParams.get('state') // GitHub에서 사용하는 경우 있음음
-    // const scope = urlParams.get('scope')
-    console.log('URL 파라미터:', { code, scope, state })
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+    const scope = urlParams.get('scope');
+    const state = urlParams.get('state');
 
     if (code && scope) {
-      console.log('Google 콜백 처리 시작')
-      ;(async () => {
-        await handleGoogleCallback()
-      })()
+      (async () => {
+        await handleGoogleCallback();
+      })();
     } else if (code) {
-      console.log('GitHub 콜백 처리 시작')
-      handleGitHubCallback()
+      handleGitHubCallback();
     }
-  }, [navigate])
+  }, [navigate]);
 
   const handleGitHubLogin = () => {
-    console.log('GitHub 로그인 시작')
-    const clientId = 'Ov23li5L5MWwr3CjBDO5'
-    const redirectUri = 'http://localhost:5173'
-    const scope = 'read:user'
-    const authUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}`
-    console.log('GitHub 인증 URL:', authUrl)
-    window.location.href = authUrl
-  }
+    const clientId = 'Ov23li5L5MWwr3CjBDO5';
+    const scope = 'read:user';
+    const authUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${githubRedirectUri}&scope=${scope}`;
+    window.location.href = authUrl;
+  };
 
   const handleGoogleLogin = () => {
-    console.log('Google 로그인 시작')
     const clientId =
-      '670597003725-jq6jaa85oeojos02kcdkta5ghtj99e7i.apps.googleusercontent.com'
-    const redirectUri = 'http://localhost:5173'
+      '670597003725-jq6jaa85oeojos02kcdkta5ghtj99e7i.apps.googleusercontent.com';
     const scope =
-      'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email'
-    const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}&access_type=offline&prompt=consent`
-    console.log('Google 인증 URL:', authUrl)
-    window.location.href = authUrl
-  }
+      'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email';
+    const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${googleRedirectUri}&response_type=code&scope=${scope}&access_type=offline&prompt=consent`;
+    window.location.href = authUrl;
+  };
 
   const handleGitHubCallback = async () => {
-    console.log('GitHub 콜백 처리 시작')
-    const urlParams = new URLSearchParams(window.location.search)
-    const code = urlParams.get('code')
-    const state = urlParams.get('state')
-    console.log('GitHub 콜백 파라미터:', { code, state })
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+    const state = urlParams.get('state');
 
     if (code && !state) {
       try {
-        console.log('GitHub 서버 요청 시작')
-        const response = await fetch('http://localhost:5000/auth/github', {
+        const response = await fetch('/auth/github', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ code }),
-        })
+        });
 
-        const data = await response.json()
-        console.log('GitHub 서버 응답:', data)
-
+        const data = await response.json();
         if (data.success) {
-          console.log('GitHub 로그인 성공, 사용자 정보 저장')
-          const userData = data.user
-          localStorage.setItem('user', JSON.stringify(userData))
-          setUser(userData)
+          const userData = data.user;
+          localStorage.setItem('user', JSON.stringify(userData));
+          setUser(userData);
           window.history.replaceState(
             {},
             document.title,
             window.location.pathname
-          )
-          console.log('Chat 페이지로 이동 시도')
-          navigate('/chat', { replace: true })
+          );
+          navigate('/chat', { replace: true });
         } else {
-          console.error('GitHub OAuth Error:', data.error)
+          console.error('GitHub OAuth Error:', data.error);
         }
       } catch (error) {
-        console.error('Error during GitHub callback:', error)
+        console.error('Error during GitHub callback:', error);
       }
     }
-  }
+  };
 
   const handleGoogleCallback = async () => {
-    console.log('Google 콜백 처리 시작')
-    const urlParams = new URLSearchParams(window.location.search)
-    const code = urlParams.get('code')
-    console.log('Google 콜백 파라미터:', { code })
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
 
     if (code) {
       try {
-        console.log('Google 서버 요청 시작')
-        const response = await fetch('http://localhost:5000/auth/google', {
+        const response = await fetch('/auth/google', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ code }),
-        })
+        });
 
-        const data = await response.json()
-        console.log('Google 서버 응답:', data)
-
+        const data = await response.json();
         if (data.success) {
-          console.log('Google 로그인 성공, 사용자 정보 저장')
-          const userData = data.user
-          localStorage.setItem('user', JSON.stringify(userData))
-          setUser(userData)
+          const userData = data.user;
+          localStorage.setItem('user', JSON.stringify(userData));
+          setUser(userData);
           window.history.replaceState(
             {},
             document.title,
             window.location.pathname
-          )
-          console.log('Chat 페이지로 이동 시도')
-          navigate('/chat', { replace: true })
+          );
+          navigate('/chat', { replace: true });
         } else {
-          console.error('Google OAuth Error:', data.error)
+          console.error('Google OAuth Error:', data.error);
         }
       } catch (error) {
-        console.error('Error during Google callback:', error)
+        console.error('Error during Google callback:', error);
       }
     }
-  }
+  };
 
   const handleLogout = () => {
-    console.log('로그아웃 처리')
-    localStorage.removeItem('user')
-    setUser(null)
-    navigate('/', { replace: true })
-  }
+    localStorage.removeItem('user');
+    setUser(null);
+    navigate('/', { replace: true });
+  };
 
   return (
     <div className="container">
@@ -188,7 +159,7 @@ function LoginForm() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default LoginForm
+export default LoginForm;
