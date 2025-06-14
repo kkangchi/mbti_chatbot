@@ -1,0 +1,94 @@
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.image-section {
+  flex: 1;
+  display: flex;
+  align-items: center; /* 세로 가운데 정렬 */
+  justify-content: center; /* 가로 가운데 정렬 */
+}
+
+.login-image {
+  width: 80%;
+  max-width: 700px;
+  height: auto; /* 비율 유지 */
+  border-radius: 10px;
+  object-fit: contain;
+}
+
+.login-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-box {
+  width: 80%;
+  max-width: 400px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.login-form h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.login-button {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.login-button.github {
+  background-color: #333;
+  color: #fff;
+}
+
+.login-button.github:hover {
+  background-color: #000000;
+}
+
+.login-button.google {
+  background-color: #db4437;
+  color: #fff;
+}
+
+.login-button.google:hover {
+  background-color: #e60000;
+}
+
+.logout-button {
+  background-color: #ff4d4d;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background-color: #e60000;
+}
+
+.welcome-box h2 {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.welcome-title {
+  font-size: 22px;
+  margin-top: 0;
+  margin-bottom: 16px;
+  text-align: center;
+}

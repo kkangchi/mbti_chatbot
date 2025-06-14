@@ -1,0 +1,115 @@
+.result-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 24px 16px;
+}
+
+.result-image-wrap {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background-color: var(--color-bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.result-image {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
+
+.result-type-text {
+  font-size: 2rem;
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.result-description {
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  text-align: center;
+  max-width: 400px;
+  line-height: 1.4;
+}
+
+/* 막대 그래프  */
+.bars-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 360px;
+}
+
+.bar-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 왼쪽 ex))E 67% */
+.bar-label-left {
+  flex: 0 0 60px;
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--color-text-primary);
+  text-align: left;
+}
+
+.bold {
+  font-weight: 700 !important;
+}
+
+/* ----- 막대 전체 래퍼 ----- */
+.bar-wrapper {
+  position: relative;
+  flex: 1;
+  height: 12px;
+  background-color: var(--color-border);
+  border-radius: 6px;
+  overflow: hidden;
+  display: flex;
+}
+
+/* 파란색  */
+.bar-fill-left {
+  background-color: var(--color-primary);
+  height: 100%;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+/*  회색 오른쪽쪽 */
+.bar-fill-right {
+  background-color: var(--color-border);
+  height: 100%;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+/*  ex)I 33% */
+.bar-label-right {
+  flex: 0 0 60px;
+  font-size: 0.95rem;
+  color: var(--color-text-primary);
+  text-align: right;
+}
+
+/* 다시 검사하기 버튼 */
+.retry-button {
+  padding: 10px 24px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: var(--color-primary);
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.retry-button:hover {
+  background-color: var(--color-primary-hover);
+}

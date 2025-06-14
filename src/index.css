@@ -1,0 +1,362 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(#f0f9ff, #cddeff);
+}
+
+.chatbot-popup {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: #fff;
+}
+
+.chatbot-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.chatbot-popup.with-navbar {
+  margin-left: 300px;
+  width: calc(100% - 300px);
+}
+
+.chatbot-popup.full-width {
+  margin-left: 0;
+  width: 100%;
+}
+
+.chatbot-popup .chat-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 22px;
+  background: #46b8ff;
+}
+
+.chat-header .header-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.chat-header .navbar-toggle {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #46b8ff;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.5rem;
+  transition: background 0.3s ease;
+  z-index: 1001;
+}
+
+.chat-header .navbar-toggle:hover {
+  background: #4aa5de;
+}
+
+.chat-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 460px;
+  margin-bottom: 82px;
+  overflow-y: auto;
+  padding: 25px 22px;
+  gap: 20px;
+}
+
+.chat-body .message {
+  display: flex;
+  gap: 11px;
+  align-items: center;
+}
+
+.chat-body .message-bot-message,
+.chat-body .message-user-message {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  gap: 10px;
+}
+
+.chat-body .message-user-message {
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.chat-body .message-bot-message svg {
+  height: 35px;
+  width: 35px;
+  padding: 6px;
+  flex-shrink: 0;
+  fill: #fff;
+  align-self: flex-end;
+  margin-bottom: 2px;
+  background: #46b8ff;
+  border-radius: 50%;
+}
+
+.chat-body .message .message-text {
+  padding: 12px 16px;
+  max-width: 100%;
+  word-wrap: break-word;
+  white-space: pre-line;
+  font-size: 0.95rem;
+}
+
+.chat-body .message-bot-message .message-text {
+  background: #f2f5ff;
+  border-radius: 13px 13px 13px 3px;
+  font-size: 0.9rem;
+  padding: 10px 14px;
+  line-height: 1.4;
+}
+
+.chat-body .message-user-message .message-text {
+  background: #bfdaff;
+  color: #000000;
+  border-radius: 13px 13px 3px 13px;
+  font-size: 0.9rem;
+  padding: 10px 14px;
+  line-height: 1.4;
+}
+
+.chat-footer {
+  position: absolute;
+  bottom: 30px;
+  width: 100%;
+  background: #fff;
+  padding: 10px 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chat-footer .chat-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border-radius: 32px;
+  outline: 1px solid #cccce5;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.06);
+  width: 100%;
+  max-width: 800px;
+  padding: 8px;
+}
+
+.chat-footer .chat-form:focus-within {
+  outline: 2px solid #46b8ff;
+}
+
+.chat-form .message-input {
+  border: none;
+  outline: none;
+  width: 100%;
+  background: none;
+  height: 40px;
+  padding: 0 15px;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.chat-form button {
+  height: 30px;
+  width: 30px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #fff;
+  flex-shrink: 0;
+  margin-left: 8px;
+  border-radius: 50%;
+  background: #46b8ff;
+  transition: 0.2s ease;
+}
+
+.chat-form button:hover {
+  background: #4aa5de;
+}
+
+.chat-form button {
+  display: none;
+}
+
+.chat-form .message-input:valid ~ button {
+  display: block;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 100vh;
+  background: #46b8ff;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  justify-content: space-between;
+}
+
+.navbar .navbar-toggle {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #fff;
+  color: #46b8ff;
+  border: none;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.5rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s ease;
+}
+
+.navbar .navbar-toggle:hover {
+  background: #ddd;
+}
+
+.navbar .login-button {
+  width: 100%;
+  padding: 10px;
+  background: #46b8ff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  text-align: center;
+  transition: background 0.3s ease, color 0.3s ease;
+  margin-top: auto;
+}
+
+.navbar .login-button:hover {
+  background: #fff;
+  color: #46b8ff;
+}
+
+.chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* ⭐ 핵심: 왼쪽-오른쪽 끝으로 보내기 */
+  padding: 15px 22px;
+  background: #46b8ff;
+}
+
+.header-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* ⭐ 오른쪽으로 붙이기 */
+  flex-grow: 1; /* ⭐ 공간을 채워서 왼쪽과 오른쪽을 벌려줌 */
+}
+
+.mbti-dropdown {
+  padding: 8px 12px;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 5px;
+  background: #fff;
+  color: #46b8ff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.mbti-dropdown:focus {
+  outline: none;
+  border: 2px solid #fff;
+}
+
+.center-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.custom-dropdown {
+  position: relative;
+  width: 120px;
+  user-select: none;
+}
+
+.custom-dropdown-header {
+  background: #fff;
+  color: #46b8ff;
+  padding: 8px 12px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  font-size: 0.95rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.custom-dropdown-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 150px; /* ⭐ 여기서 스크롤 생김 */
+  overflow-y: auto;
+  background: #fff;
+  border-radius: 5px;
+  margin-top: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+}
+
+.custom-dropdown-item {
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.custom-dropdown-item:hover {
+  background: #f0f0f5;
+}
+
+.dropdown-arrow {
+  font-size: 0.7rem;
+}
